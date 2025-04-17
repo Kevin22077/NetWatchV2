@@ -1,0 +1,36 @@
+﻿@model NetWatchV2.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<h1 class="text-center">Registrarse</h1>
+
+<div class="row justify-content-center text-center">
+    <div class="col-md-4">
+        <form method="post" asp-controller="Auth" asp-action="Register">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre"></label>
+                <input asp-for="Nombre" class="form-control" required>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Correo"></label>
+                <input asp-for="Correo" class="form-control" required>
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" required>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+    </div>
+</div>

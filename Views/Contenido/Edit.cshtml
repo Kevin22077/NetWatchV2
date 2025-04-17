@@ -1,0 +1,92 @@
+﻿@model NetWatchV2.Models.Contenido
+@{
+    ViewData["Title"] = "Editar Contenido";
+}
+
+<h1>Editar Contenido</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                @Html.DropDownListFor(model => model.Tipo, new List<SelectListItem>
+                {
+                new SelectListItem { Text = "Serie", Value = "Serie" },
+                new SelectListItem { Text = "Película", Value = "Película" }
+                }, "Seleccionar Tipo", new { @class = "form-control" })
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Genero" class="control-label"></label>
+                <input asp-for="Genero" class="form-control" />
+                <span asp-validation-for="Genero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Año" class="control-label"></label>
+                <input asp-for="Año" class="form-control" />
+                <span asp-validation-for="Año" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Plataforma" class="control-label"></label>
+                @Html.DropDownListFor(model => model.Plataforma, new List<SelectListItem>
+                {
+                new SelectListItem { Text = "Netflix", Value = "Netflix" },
+                new SelectListItem { Text = "Amazon Prime", Value = "Amazon Prime" },
+                new SelectListItem { Text = "Disney+", Value = "Disney+" },
+                new SelectListItem { Text = "HBO Max", Value = "HBO Max" }
+                }, "Seleccionar Plataforma", new { @class = "form-control" })
+                <span asp-validation-for="Plataforma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sinopsis" class="control-label"></label>
+                <textarea asp-for="Sinopsis" class="form-control"></textarea>
+                <span asp-validation-for="Sinopsis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LinkPortada" class="control-label"></label>
+                <input asp-for="LinkPortada" class="form-control" />
+                <span asp-validation-for="LinkPortada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Calificacion" class="control-label"></label>
+                <input asp-for="Calificacion" type="number" class="form-control" step="0.1" />
+                <span asp-validation-for="Calificacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duracion" class="control-label"></label>
+                <input asp-for="Duracion" class="form-control" />
+                <span asp-validation-for="Duracion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Temporada" class="control-label"></label>
+                <input asp-for="Temporada" class="form-control" />
+                <span asp-validation-for="Temporada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capitulo" class="control-label"></label>
+                <input asp-for="Capitulo" class="form-control" />
+                <span asp-validation-for="Capitulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Volver a la Lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

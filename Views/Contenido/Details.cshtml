@@ -1,0 +1,81 @@
+﻿@model NetWatchV2.Models.Contenido
+@{
+    ViewData["Title"] = "Detalles del Contenido";
+}
+
+<h1>Detalles del Contenido</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Genero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Año)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Año)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Plataforma)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Plataforma)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sinopsis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sinopsis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LinkPortada)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LinkPortada)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Calificacion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Calificacion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duracion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Duracion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Temporada)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Temporada)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Capitulo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Capitulo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Volver a la Lista</a>
+</div>

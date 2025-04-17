@@ -1,0 +1,37 @@
+﻿@model IEnumerable<NetWatchV2.Models.Contenido>
+@{
+    ViewData["Title"] = "Gestión de Contenido";
+}
+
+<h1>Gestión de Contenido</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear Nuevo Contenido</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Genero)</th>
+            <th>@Html.DisplayNameFor(model => model.Año)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Genero)</td>
+                <td>@Html.DisplayFor(modelItem => item.Año)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Detalles</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
