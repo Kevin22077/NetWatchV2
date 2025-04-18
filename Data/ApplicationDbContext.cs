@@ -9,5 +9,8 @@ namespace NetWatchV2.Data
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Contenido> Contenidos { get; set; }
+        public DbSet<ContenidoVisto> ContenidosVistos { get; set; } 
+        public DbSet<ListaReproduccion> ListasReproduccion { get; set; }
+        public DbSet<ListaOpiniones> ListasOpiniones { get; set; }
     }
 }
