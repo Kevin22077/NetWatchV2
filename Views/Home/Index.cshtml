@@ -4,6 +4,70 @@
 
 <div class="text-center">
     <h1 class="display-4">¡Bienvenido a NetWatch!</h1>
-    <p>Usuario actual: @ViewBag.NombreUsuario</p>
     <p>Esta es la página principal de nuestra aplicación.</p>
+    <p>Explora un mundo de series y películas.</p>
 </div>
+<hr class="my-4">
+
+<h2>Recomendaciones para Ti</h2>
+@if (ViewBag.Recomendaciones != null && ((System.Collections.Generic.List<NetWatchV2.Models.Contenido>)ViewBag.Recomendaciones).Any())
+{
+    <div class="row">
+        @foreach (var contenido in ViewBag.Recomendaciones)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(contenido.LinkPortada))
+                    {
+                        <img src="@contenido.LinkPortada" class="card-img-top" alt="@contenido.Nombre">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@contenido.Nombre</h5>
+                        <p class="card-text">Tipo: @contenido.Tipo</p>
+                        <a asp-controller="Catalogo" asp-action="Details" asp-route-id="@contenido.Id" class="btn btn-info btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No hay recomendaciones disponibles en este momento.</p>
+}
+
+<hr class="my-4">
+
+@if (Context.Session.GetInt32("UsuarioId").HasValue)
+{
+    <h2>Tu Lista de Reproducción</h2>
+    @if (ViewBag.ListaReproduccion != null && ((System.Collections.Generic.List<NetWatchV2.Models.Contenido>)ViewBag.ListaReproduccion).Any())
+    {
+        <div class="row">
+            @foreach (var contenido in ViewBag.ListaReproduccion)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        @if (!string.IsNullOrEmpty(contenido.LinkPortada))
+                        {
+                            <img src="@contenido.LinkPortada" class="card-img-top" alt="@contenido.Nombre">
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@contenido.Nombre</h5>
+                            <p class="card-text">Tipo: @contenido.Tipo</p>
+                            <a asp-controller="Catalogo" asp-action="Details" asp-route-id="@contenido.Id" class="btn btn-info btn-sm">Ver Detalles</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Tu lista de reproducción está vacía.</p>
+    }
+}
+else
+{
+    <p>Inicia sesión para ver tu lista de reproducción.</p>
+}

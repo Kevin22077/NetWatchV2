@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Tiempo Total Invertido";
+}
+
+<h1>Tiempo Total Invertido</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (ViewBag.TiempoTotal != null)
+{
+    <h3>Has invertido un total de: @ViewBag.TiempoTotal</h3>
+    <p class="text-muted">Este cálculo se basa en la duración registrada para el contenido que has marcado como visto.</p>
+}
+else
+{
+    <p>Aún no has marcado ningún contenido como visto, por lo que no se puede calcular el tiempo total.</p>
+}
+
+<div>
+    <a asp-controller="Catalogo" asp-action="Index">Volver al Catálogo</a>
+</div>
