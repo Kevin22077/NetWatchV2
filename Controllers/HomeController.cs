@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using NetWatchV2.Models;
 using NetWatchV2.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace NetWatchV2.Controllers;
@@ -20,15 +21,36 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         int? usuarioId = HttpContext.Session.GetInt32("UsuarioId");
+        List<Contenido> recomendaciones = new List<Contenido>();
+        List<Contenido> listaReproduccion = new List<Contenido>();
+
         if (usuarioId.HasValue)
         {
-            var usuarioAutenticado = _context.Usuarios.Find(usuarioId.Value);
-            ViewBag.NombreUsuario = usuarioAutenticado?.Nombre;
+            // Lógica de recomendaciones (ejemplo básico: los últimos 5 contenidos agregados)
+            recomendaciones = _context.Contenidos
+                .OrderByDescending(c => c.Id)
+                .Take(3)
+                .ToList();
+
+            // Obtener la lista de reproducción del usuario
+            listaReproduccion = _context.ListasReproduccion
+                .Where(lr => lr.UsuarioId == usuarioId.Value)
+                .Include(lr => lr.Contenido)
+                .Select(lr => lr.Contenido)
+                .ToList();
         }
         else
         {
-            ViewBag.NombreUsuario = "Invitado";
+            // Si el usuario no ha iniciado sesión, mostrar algunas recomendaciones genéricas
+            recomendaciones = _context.Contenidos
+                .OrderBy(c => c.Año) // Ejemplo: ordenar por año para mostrar variedad
+                .Take(5)
+                .ToList();
         }
+
+        ViewBag.Recomendaciones = recomendaciones;
+        ViewBag.ListaReproduccion = listaReproduccion;
+
         return View();
     }
 

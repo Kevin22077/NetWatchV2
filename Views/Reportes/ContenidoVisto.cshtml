@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NetWatchV2.ViewModels.ContenidoVistoViewModel>
+@{
+    ViewData["Title"] = "Contenido Visto";
+}
+
+<h1>Contenido Visto</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre del Contenido</th>
+                <th>Tipo</th>
+                <th>Fecha en que se Vio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.NombreContenido</td>
+                    <td>@item.TipoContenido</td>
+                    <td>@item.FechaVisto.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aún no has marcado ningún contenido como visto.</p>
+}
+
+<div>
+    <a asp-controller="Catalogo" asp-action="Index">Volver al Catálogo</a>
+</div>
