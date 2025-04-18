@@ -18,6 +18,10 @@ public class HomeController : Controller
         _context = context;
     }
 
+    /// <summary>
+    /// Valida si el usuario se encuentra registrado y selecciona contenido de lista de reproduccion y recomendaciones.
+    /// </summary>
+    /// <returns> Lista de reproduccion y recomendaciones. </returns>
     public IActionResult Index()
     {
         int? usuarioId = HttpContext.Session.GetInt32("UsuarioId");
@@ -26,24 +30,21 @@ public class HomeController : Controller
 
         if (usuarioId.HasValue)
         {
-            // Lógica de recomendaciones (ejemplo básico: los últimos 5 contenidos agregados)
-            recomendaciones = _context.Contenidos
-                .OrderByDescending(c => c.Id)
-                .Take(3)
-                .ToList();
-
-            // Obtener la lista de reproducción del usuario
             listaReproduccion = _context.ListasReproduccion
                 .Where(lr => lr.UsuarioId == usuarioId.Value)
                 .Include(lr => lr.Contenido)
                 .Select(lr => lr.Contenido)
                 .ToList();
+
+            recomendaciones = _context.Contenidos
+                .OrderByDescending(c => c.Id)
+                .Take(3)
+                .ToList();
         }
         else
         {
-            // Si el usuario no ha iniciado sesión, mostrar algunas recomendaciones genéricas
             recomendaciones = _context.Contenidos
-                .OrderBy(c => c.Año) // Ejemplo: ordenar por año para mostrar variedad
+                .OrderBy(c => c.Año)
                 .Take(5)
                 .ToList();
         }

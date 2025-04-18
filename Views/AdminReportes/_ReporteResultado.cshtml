@@ -1,0 +1,104 @@
+﻿@if (ViewBag.ReporteTitulo != null)
+{
+    <h3>@ViewBag.ReporteTitulo</h3>
+}
+else
+{
+    <div class="mt-4">
+        <h3>Acciones del Reporte para @ViewBag.NombreMesSeleccionado de @ViewBag.AñoSeleccionado</h3>
+        <button id="btnTotalUsuarios" class="btn btn-primary me-2">Total Usuarios Registrados</button>
+        <button id="btnNuevosUsuarios" class="btn btn-info me-2">Nuevos Usuarios Registrados</button>
+        <button id="btnContenidoMasVisto" class="btn btn-success me-2">Contenido Más Visto</button>
+        <button id="btnUsuariosConActividad" class="btn btn-warning">Usuarios con Actividad</button>
+    </div>
+}
+
+@if (ViewBag.TotalUsuarios != null)
+{
+    <p>Total de usuarios: @ViewBag.TotalUsuarios</p>
+    <p>
+        <a href="@Url.Action("DescargarTotalUsuariosRegistrados", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "pdf" })" class="btn btn-danger btn-sm me-2">Descargar PDF</a>
+        <a href="@Url.Action("DescargarTotalUsuariosRegistrados", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "csv" })" class="btn btn-secondary btn-sm">Descargar CSV</a>
+    </p>
+}
+
+@if (ViewBag.NuevosUsuarios != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Fecha de Registro</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in ViewBag.NuevosUsuarios)
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.Correo</td>
+                    <td>@usuario.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a href="@Url.Action("DescargarNuevosUsuariosRegistrados", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "pdf" })" class="btn btn-danger btn-sm me-2">Descargar PDF</a>
+        <a href="@Url.Action("DescargarNuevosUsuariosRegistrados", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "csv" })" class="btn btn-secondary btn-sm">Descargar CSV</a>
+    </p>
+}
+
+@if (ViewBag.ContenidoMasVisto != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Contenido</th>
+                <th>Género</th>
+                <th>Veces Visto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.ContenidoMasVisto)
+            {
+                <tr>
+                    <td>@item.ContenidoNombre</td>
+                    <td>@item.Genero</td>
+                    <td>@item.VecesVisto</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a href="@Url.Action("DescargarContenidoMasVisto", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "pdf" })" class="btn btn-danger btn-sm me-2">Descargar PDF</a>
+        <a href="@Url.Action("DescargarContenidoMasVisto", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "csv" })" class="btn btn-secondary btn-sm">Descargar CSV</a>
+    </p>
+}
+
+@if (ViewBag.UsuariosConActividad != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Tipo de Actividad</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.UsuariosConActividad)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.TipoActividad</td>
+                    <td>@item.Fecha.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a href="@Url.Action("DescargarUsuariosConActividad", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "pdf" })" class="btn btn-danger btn-sm me-2">Descargar PDF</a>
+        <a href="@Url.Action("DescargarUsuariosConActividad", new { mes = ViewBag.MesSeleccionado, año = ViewBag.AñoSeleccionado, formato = "csv" })" class="btn btn-secondary btn-sm">Descargar CSV</a>
+    </p>
+}

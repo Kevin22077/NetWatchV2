@@ -1,0 +1,72 @@
+﻿@using NetWatchV2.Extensions
+
+@{
+    ViewData["Title"] = "Reportes de Administración";
+}
+
+<h1>Reportes de Administración</h1>
+
+<form asp-action="GenerarReporte" method="post">
+    <div class="mb-3">
+        <label for="mes" class="form-label">Mes:</label>
+        <select class="form-select" id="mes" name="mes">
+            @for (int i = 1; i <= 12; i++)
+            {
+                var nombreMes = new System.Globalization.CultureInfo("es-ES").DateTimeFormat.GetMonthName(i);
+                <option value="@i">@nombreMes.ToUpperFirstChar()</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="año" class="form-label">Año:</label>
+        <select class="form-select" id="año" name="año">
+            @for (int i = DateTime.Now.Year; i >= 2020; i--)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Generar Reportes</button>
+</form>
+
+<div id="reporteResultado">
+    @* Los resultados de los reportes se cargarán aquí mediante AJAX *@
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+                var mes = $('#mes').val();
+                var año = $('#año').val();
+                $('#reporteResultado').empty(); // Limpiar resultados anteriores
+
+                // Cargar el panel de botones de reportes
+                $.post('@Url.Action("GenerarReporte")', { mes: mes, año: año }, function (data) {
+                    $('#reporteResultado').html(data);
+
+                    // Adjuntar eventos a los botones cargados dinámicamente
+                    $('#btnTotalUsuarios').on('click', function () {
+                        cargarReporte('@Url.Action("TotalUsuariosRegistrados")', { mes: mes, año: año });
+                    });
+                    $('#btnNuevosUsuarios').on('click', function () {
+                        cargarReporte('@Url.Action("NuevosUsuariosRegistrados")', { mes: mes, año: año });
+                    });
+                    $('#btnContenidoMasVisto').on('click', function () {
+                        cargarReporte('@Url.Action("ContenidoMasVisto")', { mes: mes, año: año });
+                    });
+                    $('#btnUsuariosConActividad').on('click', function () {
+                        cargarReporte('@Url.Action("UsuariosConActividad")', { mes: mes, año: año });
+                    });
+                });
+            });
+
+            function cargarReporte(url, data) {
+                $.get(url, data, function (ReporteData) {
+                    $('#reporteResultado').html(ReporteData);
+                });
+            }
+        });
+    </script>
+}

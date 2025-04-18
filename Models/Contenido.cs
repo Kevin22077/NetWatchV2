@@ -35,5 +35,6 @@ namespace NetWatchV2.Models
         public int? Temporada { get; set; }
 
         public int? Capitulo { get; set; }
+        public DateTime FechaCreacion { get; set; }
     }
 }
