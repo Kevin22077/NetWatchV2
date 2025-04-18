@@ -21,5 +21,6 @@ namespace NetWatchV2.Models
 
         [DataType(DataType.MultilineText)]
         public string OpinionTexto { get; set; }
+        public DateTime FechaCreacion { get; set; }
     }
 }

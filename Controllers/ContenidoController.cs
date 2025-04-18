@@ -32,6 +32,7 @@ namespace NetWatchV2.Controllers
         {
             if (ModelState.IsValid)
             {
+                contenido.FechaCreacion = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time"));
                 _context.Contenidos.Add(contenido);
                 _context.SaveChanges();
                 return RedirectToAction("Index");

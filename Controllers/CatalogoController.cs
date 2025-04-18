@@ -147,7 +147,8 @@ namespace NetWatchV2.Controllers
                         UsuarioId = usuarioId.Value,
                         ContenidoId = contenidoId,
                         CalificacionOpinion = calificacionOpinion,
-                        OpinionTexto = opinionTexto
+                        OpinionTexto = opinionTexto,
+                        FechaCreacion = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time"))
                     };
                     _context.ListasOpiniones.Add(nuevaOpinion);
                     _context.SaveChanges();
