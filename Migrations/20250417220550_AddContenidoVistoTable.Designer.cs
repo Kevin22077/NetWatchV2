@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetWatchV2.Data;
 
@@ -11,9 +12,11 @@ using NetWatchV2.Data;
 namespace NetWatchV2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250417220550_AddContenidoVistoTable")]
+    partial class AddContenidoVistoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,37 +104,6 @@ namespace NetWatchV2.Migrations
                     b.ToTable("ContenidosVistos");
                 });
 
-            modelBuilder.Entity("NetWatchV2.Models.ListaOpiniones", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CalificacionOpinion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ContenidoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OpinionTexto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContenidoId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("ListasOpiniones");
-                });
-
             modelBuilder.Entity("NetWatchV2.Models.ListaReproduccion", b =>
                 {
                     b.Property<int>("Id")
@@ -187,25 +159,6 @@ namespace NetWatchV2.Migrations
                 });
 
             modelBuilder.Entity("NetWatchV2.Models.ContenidoVisto", b =>
-                {
-                    b.HasOne("NetWatchV2.Models.Contenido", "Contenido")
-                        .WithMany()
-                        .HasForeignKey("ContenidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NetWatchV2.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contenido");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("NetWatchV2.Models.ListaOpiniones", b =>
                 {
                     b.HasOne("NetWatchV2.Models.Contenido", "Contenido")
                         .WithMany()

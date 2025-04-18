@@ -1,0 +1,154 @@
+﻿@model NetWatchV2.Models.Contenido
+@using NetWatchV2.ViewModels
+@{
+    ViewData["Title"] = "Detalles del Contenido";
+}
+
+<h1>Detalles del Contenido</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Genero)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Año)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Año)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Plataforma)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Plataforma)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sinopsis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sinopsis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LinkPortada)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.LinkPortada))
+            {
+                <img src="@Model.LinkPortada" alt="@Model.Nombre" style="max-width: 300px;">
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Calificacion)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Calificacion?.ToString("0.0")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duracion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Duracion)
+        </dd>
+        @if (Model.Tipo == "Serie")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Temporada)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Temporada
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Capitulo)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Capitulo
+            </dd>
+        }
+    </dl>
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["Mensaje"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form asp-action="MarcarVisto" method="post">
+        <input type="hidden" name="contenidoId" value="@Model.Id" />
+        <button type="submit" class="btn btn-primary me-2">Marcar como Visto</button>
+    </form>
+    <br>
+    <form asp-action="AgregarListaReproduccion" method="post">
+        <input type="hidden" name="contenidoId" value="@Model.Id" />
+        <button type="submit" class="btn btn-secondary">Agregar a Lista de Reproducción</button>
+    </form>
+
+    <hr />
+    <h4>Dejar una Opinión</h4>
+    @if (TempData["MensajeOpinion"] != null)
+    {
+        <div class="alert alert-success">@TempData["MensajeOpinion"]</div>
+    }
+    @if (TempData["ErrorOpinion"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorOpinion"]</div>
+    }
+    <form asp-action="GuardarOpinion" method="post">
+        <input type="hidden" name="contenidoId" value="@Model.Id" />
+        <div class="mb-3">
+            <label for="calificacionOpinion" class="form-label">Calificación:</label>
+            <select class="form-select" id="calificacionOpinion" name="calificacionOpinion">
+                <option value="">Seleccionar Calificación</option>
+                <option value="Muy bueno">Muy bueno</option>
+                <option value="Bueno">Bueno</option>
+                <option value="Regular">Regular</option>
+                <option value="Malo">Malo</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="opinionTexto" class="form-label">Tu Opinión:</label>
+            <textarea class="form-control" id="opinionTexto" name="opinionTexto" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Opinión</button>
+    </form>
+
+    <hr />
+    <h4>Opiniones de Otros Usuarios</h4>
+    @if (ViewBag.Opiniones != null && ((System.Collections.Generic.List<OpinionViewModel>)ViewBag.Opiniones).Any())
+    {
+        <ul class="list-unstyled">
+            @foreach (var opinion in (List<OpinionViewModel>)ViewBag.Opiniones)
+            {
+                <li class="mb-3">
+                    <strong>@opinion.NombreUsuario</strong> - Calificación: @opinion.Calificacion
+                    <p>@opinion.TextoOpinion</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Aún no hay opiniones para este contenido.</p>
+    }
+</div>
+<br>
+<div>
+    <a asp-action="Index">Volver al Catálogo</a>
+</div>

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<NetWatchV2.Models.Contenido>
+@{
+    ViewData["Title"] = "Catálogo de Contenido";
+}
+
+<h1>Catálogo de Contenido</h1>
+
+<form asp-action="Index" method="get">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="nombreFiltro" class="form-label">Filtrar por Nombre:</label>
+            <input type="text" class="form-control" id="nombreFiltro" name="nombreFiltro" value="@ViewData["NombreFiltro"]">
+        </div>
+        <div class="col-md-3">
+            <label for="generoFiltro" class="form-label">Filtrar por Género:</label>
+            <input type="text" class="form-control" id="generoFiltro" name="generoFiltro" value="@ViewData["GeneroFiltro"]">
+        </div>
+        <div class="col-md-3">
+            <label for="plataformaFiltro" class="form-label">Filtrar por Plataforma:</label>
+            <select class="form-select" id="plataformaFiltro" name="plataformaFiltro">
+                <option value="">Todas</option>
+                <option value="Netflix" selected="@(ViewData["PlataformaFiltro"] == "Netflix")">Netflix</option>
+                <option value="Amazon Prime" selected="@(ViewData["PlataformaFiltro"] == "Amazon Prime")">Amazon Prime</option>
+                <option value="Disney+" selected="@(ViewData["PlataformaFiltro"] == "Disney+")">Disney+</option>
+                <option value="HBO Max" selected="@(ViewData["PlataformaFiltro"] == "HBO Max")">HBO Max</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="calificacionFiltro" class="form-label">Filtrar por Calificación:</label>
+            <select class="form-select" id="calificacionFiltro" name="calificacionFiltro">
+                <option value="">Todas</option>
+                <option value="1-2" selected="@(ViewData["CalificacionFiltro"] == "1-2")">1-2</option>
+                <option value="2-3" selected="@(ViewData["CalificacionFiltro"] == "2-3")">2-3</option>
+                <option value="3-4" selected="@(ViewData["CalificacionFiltro"] == "3-4")">3-4</option>
+                <option value="4-5" selected="@(ViewData["CalificacionFiltro"] == "4-5")">4-5</option>
+                <option value="5-6" selected="@(ViewData["CalificacionFiltro"] == "5-6")">5-6</option>
+                <option value="6-7" selected="@(ViewData["CalificacionFiltro"] == "6-7")">6-7</option>
+                <option value="7-8" selected="@(ViewData["CalificacionFiltro"] == "7-8")">7-8</option>
+                <option value="8-9" selected="@(ViewData["CalificacionFiltro"] == "8-9")">8-9</option>
+                <option value="9-10" selected="@(ViewData["CalificacionFiltro"] == "9-10")">9-10</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+    <a asp-action="Index" class="btn btn-secondary">Limpiar Filtros</a>
+</form>
+
+<hr />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(item.LinkPortada))
+                {
+                    <img src="@item.LinkPortada" class="card-img-top" alt="@item.Nombre">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@item.Nombre</h5>
+                    <p class="card-text">Tipo: @item.Tipo</p>
+                    <p class="card-text">Género: @item.Genero</p>
+                    <p class="card-text">Calificación: @item.Calificacion?.ToString("0.0")</p>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
