@@ -40,7 +40,7 @@ namespace NetWatchV2.Controllers
                 .Where(u => u.FechaRegistro.Year == año && u.FechaRegistro.Month == mes)
                 .CountAsync();
             ViewBag.TotalUsuarios = totalUsuarios;
-            ViewBag.ReporteTitulo = $"Total de Usuarios Registrados en {new DateTime(año, mes, 1).ToString("MMMM", new CultureInfo("es-ES"))}";
+            ViewBag.ReporteTitulo = $"Total de Usuarios Registrados en {new DateTime(año, mes, 1).ToString("MMMM yyyy", new CultureInfo("es-ES"))}";
             ViewBag.MesSeleccionado = mes;
             ViewBag.AñoSeleccionado = año;
             return PartialView("_ReporteResultado");
@@ -53,7 +53,7 @@ namespace NetWatchV2.Controllers
                 .Select(u => new { u.Nombre, u.Correo, u.FechaRegistro })
                 .ToListAsync();
             ViewBag.NuevosUsuarios = nuevosUsuarios;
-            ViewBag.ReporteTitulo = $"Nuevos Usuarios Registrados en {new DateTime(año, mes, 1).ToString("MMMM", new CultureInfo("es-ES"))}";
+            ViewBag.ReporteTitulo = $"Nuevos Usuarios Registrados en {new DateTime(año, mes, 1).ToString("MMMM yyyy", new CultureInfo("es-ES"))}";
             ViewBag.MesSeleccionado = mes;
             ViewBag.AñoSeleccionado = año;
             return PartialView("_ReporteResultado");
