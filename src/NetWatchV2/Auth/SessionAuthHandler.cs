@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace NetWatchV2.Auth
 {
+    /// <summary>
+    /// Handler de autenticación para la sesión del usuario.
+    /// </summary>
     public class SessionAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -28,10 +31,9 @@ namespace NetWatchV2.Auth
 
             if (sessionId.HasValue)
             {
-                // El usuario tiene un Id en la sesión, consideramos que está autenticado
                 var claims = new[] {
                     new Claim(ClaimTypes.NameIdentifier, sessionId.ToString()),
-                    new Claim(ClaimTypes.Name, sessionId.ToString()), // Puedes agregar más claims si es necesario
+                    new Claim(ClaimTypes.Name, sessionId.ToString()), 
                 };
                 var identity = new ClaimsIdentity(claims, Scheme.Name);
                 var principal = new ClaimsPrincipal(identity);
@@ -39,8 +41,6 @@ namespace NetWatchV2.Auth
 
                 return AuthenticateResult.Success(ticket);
             }
-
-            // No hay Id en la sesión, el usuario no está autenticado
             return AuthenticateResult.Fail("No user session found.");
         }
     }

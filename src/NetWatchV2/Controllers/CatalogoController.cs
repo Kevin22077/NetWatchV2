@@ -15,6 +15,14 @@ namespace NetWatchV2.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Método para mostrar el catálogo de contenidos.
+        /// </summary>
+        /// <param name="nombreFiltro"></param>
+        /// <param name="generoFiltro"></param>
+        /// <param name="plataformaFiltro"></param>
+        /// <param name="calificacionFiltro"></param>
+        /// <returns></returns>
         public IActionResult Index(string nombreFiltro, string generoFiltro, string plataformaFiltro, string calificacionFiltro)
         {
             var contenidos = _context.Contenidos.AsQueryable();
@@ -50,6 +58,11 @@ namespace NetWatchV2.Controllers
             return View(contenidos.ToList());
         }
 
+        /// <summary>
+        /// Método para mostrar los detalles de un contenido específico.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Details(int id)
         {
             var contenido = _context.Contenidos.Find(id);
@@ -73,6 +86,7 @@ namespace NetWatchV2.Controllers
             return View(contenido);
         }
 
+
         [HttpPost]
         public IActionResult MarcarVisto(int contenidoId)
         {
@@ -86,7 +100,7 @@ namespace NetWatchV2.Controllers
                     {
                         UsuarioId = usuarioId.Value,
                         ContenidoId = contenidoId,
-                        FechaVisto = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time")) // Hora de Costa Rica
+                        FechaVisto = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time"))
                     };
                     _context.ContenidosVistos.Add(contenidoVisto);
                     _context.SaveChanges();

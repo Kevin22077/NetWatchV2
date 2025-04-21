@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NetWatchV2.Auth
 {
+    /// <summary>
+    /// Handler de validacion para el requisito de administrador.
+    /// </summary>
     public class AdminAuthorizationHandler : AuthorizationHandler<AdminRequirement>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

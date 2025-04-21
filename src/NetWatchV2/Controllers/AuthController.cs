@@ -25,6 +25,9 @@ namespace NetWatchV2.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Método para iniciar sesión.
+        /// </summary>
         [HttpPost]
         public IActionResult Login(string correo, string contrasena, string ReturnUrl = null)
         {
@@ -36,7 +39,6 @@ namespace NetWatchV2.Controllers
                 {
                     if (VerifyPassword(contrasena, usuario.Contrasena))
                     {
-                        // Autenticación exitosa
                         HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
 
                         if (string.IsNullOrEmpty(ReturnUrl))
@@ -50,13 +52,11 @@ namespace NetWatchV2.Controllers
                     }
                     else
                     {
-                        // Agregar error al ModelState para mostrar en la vista
                         ModelState.AddModelError(string.Empty, "Correo electrónico o contraseña incorrectos.");
                     }
                 }
                 else
                 {
-                    // Agregar error al ModelState para mostrar en la vista
                     ModelState.AddModelError(string.Empty, "Correo electrónico o contraseña incorrectos.");
                 }
             }
@@ -69,7 +69,9 @@ namespace NetWatchV2.Controllers
             return View();
         }
 
-        
+        /// <summary>
+        /// Método para registrar un nuevo usuario.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -81,15 +83,14 @@ namespace NetWatchV2.Controllers
                     string salt = GenerateSalt();
                     string hashedPassword = HashPassword(model.Password, salt);
 
-                    // Obtener la zona horaria de Costa Rica
-                    TimeZoneInfo costaRicaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time"); // Nombre común para la zona horaria
+                    TimeZoneInfo costaRicaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time");
 
                     var newUser = new Usuario
                     {
                         Nombre = model.Nombre,
                         Correo = model.Correo,
                         Contrasena = hashedPassword,
-                        FechaRegistro = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, costaRicaTimeZone), // Convertir UTC a la hora de Costa Rica
+                        FechaRegistro = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, costaRicaTimeZone),
                         EsAdmin = false
                     };
 
@@ -107,7 +108,10 @@ namespace NetWatchV2.Controllers
             return View(model);
         }
 
-        // Métodos para hashing y verificación de contraseñas
+        /// <summary>
+        /// Genera un salt aleatorio para el hash de la contraseña.
+        /// </summary>
+        /// <returns></returns>
         private string GenerateSalt()
         {
             byte[] salt = new byte[16];
@@ -117,6 +121,10 @@ namespace NetWatchV2.Controllers
             }
             return Convert.ToBase64String(salt);
         }
+
+        /// <summary>
+        /// Genera un hash de la contraseña.
+        /// </summary>
         private string HashPassword(string password, string salt)
         {
             byte[] saltBytes = Convert.FromBase64String(salt);
@@ -129,6 +137,10 @@ namespace NetWatchV2.Controllers
                 return Convert.ToBase64String(hashWithSaltBytes);
             }
         }
+
+        /// <summary>
+        /// Verifica si la contraseña ingresada coincide con el hash almacenado.
+        /// </summary>
         private bool VerifyPassword(string enteredPassword, string storedHash)
         {
             byte[] hashWithSaltBytes = Convert.FromBase64String(storedHash);
@@ -138,9 +150,13 @@ namespace NetWatchV2.Controllers
             return hashWithSaltBytes.SequenceEqual(Convert.FromBase64String(computedHash));
         }
 
+        /// <summary>
+        /// Método para cerrar sesión.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear(); // Elimina todas las variables de sesión
+            HttpContext.Session.Clear();
             return RedirectToAction("login", "Auth");
         }
     }

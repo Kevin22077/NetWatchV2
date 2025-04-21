@@ -20,6 +20,10 @@ namespace NetWatchV2.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Acción para mostrar la vista principal de reportes.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
