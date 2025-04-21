@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace NetWatchV2.Controllers
 {
-    [Authorize(Policy = "AdminOnly")] // Solo los administradores pueden acceder
+    [Authorize(Policy = "AdminOnly")]
     public class ContenidoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,6 +27,11 @@ namespace NetWatchV2.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Método para crear un nuevo contenido.
+        /// </summary>
+        /// <param name="contenido"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Create(Contenido contenido)
         {
@@ -40,6 +45,7 @@ namespace NetWatchV2.Controllers
             return View(contenido);
         }
 
+
         public IActionResult Delete(int id)
         {
             var contenido = _context.Contenidos.Find(id);
@@ -50,6 +56,11 @@ namespace NetWatchV2.Controllers
             return View(contenido);
         }
 
+        /// <summary>
+        /// Método para eliminar un contenido existente.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
@@ -73,6 +84,9 @@ namespace NetWatchV2.Controllers
             return View(contenido);
         }
 
+        /// <summary>
+        /// Método para editar un contenido existente.
+        /// </summary>
         [HttpPost]
         public IActionResult Edit(Contenido contenido)
         {
@@ -85,6 +99,9 @@ namespace NetWatchV2.Controllers
             return View(contenido);
         }
 
+        /// <summary>
+        /// Método para mostrar los detalles de un contenido específico.
+        /// </summary>
         public IActionResult Details(int id)
         {
             var contenido = _context.Contenidos.Find(id);

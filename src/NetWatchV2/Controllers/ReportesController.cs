@@ -17,6 +17,10 @@ namespace NetWatchV2.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Método para mostrar el historial de contenido visto por el usuario.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult ContenidoVisto()
         {
             int? usuarioId = HttpContext.Session.GetInt32("UsuarioId");
@@ -41,6 +45,10 @@ namespace NetWatchV2.Controllers
             return View(contenidoVisto);
         }
 
+        /// <summary>
+        /// Método para mostrar el tiempo total visto por el usuario.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult TiempoTotalVisto()
         {
             int? usuarioId = HttpContext.Session.GetInt32("UsuarioId");
